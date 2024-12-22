@@ -25,8 +25,7 @@ class ViewController: UIViewController {
             print("Invalid URL")
             return
         }
-        
-        // Використання URLSession для асинхронного завантаження
+
         let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
             if let error = error {
                 print("Failed to load image: \(error.localizedDescription)")
@@ -38,7 +37,6 @@ class ViewController: UIViewController {
                 return
             }
             
-            // Оновлення UI на основному потоці
             DispatchQueue.main.async {
                 self?.imageView.image = image
             }
