@@ -1,10 +1,3 @@
-//
-//  ViewController.swift
-//  RandomPhoto
-//
-//  Created by Maryna on 22/12/2024.
-//
-
 import UIKit
 
 class ViewController: UIViewController {
@@ -28,12 +21,28 @@ class ViewController: UIViewController {
 
     func getRandomPhoto() {
         let urlString = "https://source.unsplash.com/random/600x600"
-        let url = URL(string: urlString)!
-        guard let data = try? Data(contentsOf: url) else {
+        guard let url = URL(string: urlString) else {
+            print("Invalid URL")
             return
         }
-        imageView.image = UIImage(data: data)
+        
+        // Використання URLSession для асинхронного завантаження
+        let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+            if let error = error {
+                print("Failed to load image: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let data = data, let image = UIImage(data: data) else {
+                print("Failed to convert data to image")
+                return
+            }
+            
+            // Оновлення UI на основному потоці
+            DispatchQueue.main.async {
+                self?.imageView.image = image
+            }
+        }
+        task.resume()
     }
-
 }
-
