@@ -20,7 +20,7 @@ class ViewController: UIViewController {
     }
 
     func getRandomPhoto() {
-        let urlString = "https://source.unsplash.com/random/600x600"
+        let urlString = "https://picsum.photos/600/600"
         guard let url = URL(string: urlString) else {
             print("Invalid URL")
             return
