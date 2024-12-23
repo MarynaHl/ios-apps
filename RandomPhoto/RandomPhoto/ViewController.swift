@@ -17,21 +17,39 @@ class ViewController: UIViewController {
         return button
     }()
     
+    let colors: [UIColor] = [
+        .systemPink,
+        .systemBlue,
+        .systemMint,
+        .systemYellow,
+        .systemPurple,
+        .systemOrange
+    ]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemPink
         view.addSubview(imageView)
         imageView.frame = CGRect(x: 0, y: 0, width: 300, height: 300)
         imageView.center = view.center
-        
         view.addSubview(button)
-        button.frame = CGRect(x:20,
-                              y:view.frame.size.height-50-view.safeAreaInsets.bottom,
-                              width: view.frame.size.width-40,
-                              height: 50
-        )
-        
         getRandomPhoto()
+        button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
+    }
+    
+    @objc func didTapButton() {
+        getRandomPhoto()
+        
+        view.backgroundColor = colors.randomElement()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        button.frame = CGRect(x:30,
+                              y:view.frame.size.height-150-view.safeAreaInsets.bottom,
+                              width: view.frame.size.width-60,
+                              height: 55
+        )
     }
 
     func getRandomPhoto() {
