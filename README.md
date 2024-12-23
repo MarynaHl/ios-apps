@@ -1,4 +1,4 @@
-# Random Photo App 🟧🟩🟪
+# Random Photo App 
 ![combined_screenshots_aligned](https://github.com/user-attachments/assets/c8ba5ad2-ce21-4584-a11f-71ecee2f38ec)
 
 This is a simple iOS application written in Swift using UIKit. The app displays a random photo from the internet and allows the user to fetch a new photo with a button click. Additionally, the background color of the app changes dynamically with each button press.
