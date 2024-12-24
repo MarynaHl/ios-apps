@@ -1,5 +1,4 @@
 # A collection of my iOS applications built with UIKit 📱✨
-## I’ll keep adding new projects here as I learn 📚 
 
 
 ## Random Photo App 
