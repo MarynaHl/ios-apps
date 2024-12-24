@@ -1,4 +1,4 @@
-# A collection of my iOS applications built with UIKit 📱✨
+## A collection of my iOS applications built with UIKit 📱✨
 
 
 # Random Photo App 🌃
@@ -20,4 +20,3 @@ The app sends a request to the Open-Meteo API for the current weather in Kyiv.
 It decodes the response and displays the temperature on the screen.
 
 ### 
-😊 Feel free to fork, improve, or suggest features for the app!
