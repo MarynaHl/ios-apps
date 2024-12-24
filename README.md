@@ -24,17 +24,27 @@ Framework: UIKit
 Networking: URLSession
 Random Photo API: Lorem Picsum
 
-### Installation
-Clone the repository:
-bash
-Copy code
-git clone https://github.com/your-repository/random-photo-app.git
-Open the project in Xcode.
-Run the app on a simulator or a physical device.
+# Weather App 🌤️
 
-### Future Improvements
-Add a label to display the source of the photo.
-Implement additional photo filters or effects.
-Add a save feature for photos.
+![combined_weather_screenshots](https://github.com/user-attachments/assets/51de3fba-3617-4536-bd45-c8d7d2a16ffb)
 
+It's a simple application that displays the current weather in Kyiv, Ukraine, 
+using the Open-Meteo API.
+
+## Features
+Fetches and displays the current temperature for Kyiv.
+Uses the Open-Meteo API for real-time weather data.
+A minimal and beginner-friendly implementation.
+
+## Purpose
+The primary goal of this project was to learn the basics of iOS development and working with:
+UIKit for building the user interface.
+URLSession for making API requests.
+JSONDecoder for decoding JSON data.
+
+## How it works
+The app sends a request to the Open-Meteo API for the current weather in Kyiv.
+It decodes the response and displays the temperature on the screen.
+
+# 
 Feel free to fork, improve, or suggest features for the app!
