@@ -53,10 +53,10 @@
             </objects>
             <point key="canvasLocation" x="863.35877862595419" y="3.5211267605633805"/>
         </scene>
-        <!--View Controller-->
+        <!--Entry View Controller-->
         <scene sceneID="WdQ-CF-zL6">
             <objects>
-                <viewController id="6gd-HI-2PD" sceneMemberID="viewController">
+                <viewController id="6gd-HI-2PD" customClass="EntryViewController" customModule="Tasks" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2Fa-8q-kTV">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
