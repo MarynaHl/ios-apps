@@ -1,8 +1,15 @@
 import UIKit
 
+// Протокол для передачі даних назад до ViewController
+protocol TaskDelegate: AnyObject {
+    func didSaveTask(_ task: String)
+}
+
 class EntryViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet var field: UITextField!
+    
+    weak var delegate: TaskDelegate? // Делегат для передачі даних
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -12,7 +19,7 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         saveTask()
-        textField.resignFirstResponder() // Dismiss the keyboard
+        textField.resignFirstResponder() // Закриваємо клавіатуру
         return true
     }
 
@@ -21,7 +28,7 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
             print("Task field is empty")
             return
         }
-        print("Task Saved: \(taskText)")
-        // Implement saving logic here (e.g., notify a delegate or save to a list)
+        delegate?.didSaveTask(taskText) // Передаємо нове завдання через делегат
+        navigationController?.popViewController(animated: true) // Повертаємося назад
     }
 }

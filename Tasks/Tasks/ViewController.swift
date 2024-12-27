@@ -15,16 +15,26 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        // Налаштування делегатів для UITableView
+        tableView.delegate = self
+        tableView.dataSource = self
     }
 
+    // Обробка натискання кнопки "Add"
     @IBAction func didTapAdd() {
+        // Переходимо до EntryViewController
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let entryVC = storyboard.instantiateViewController(withIdentifier: "EntryViewController") as? EntryViewController else {
+            return
+        }
         
-        
+        // Встановлюємо delegate
+        entryVC.delegate = self
+        navigationController?.pushViewController(entryVC, animated: true)
     }
-    
 }
 
+// MARK: - UITableViewDelegate
 extension ViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -32,6 +42,7 @@ extension ViewController: UITableViewDelegate {
     }
 }
 
+// MARK: - UITableViewDataSource
 extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -40,8 +51,15 @@ extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        
         cell.textLabel?.text = tasks[indexPath.row]
         return cell
+    }
+}
+
+// MARK: - TaskDelegate Implementation
+extension ViewController: TaskDelegate {
+    func didSaveTask(_ task: String) {
+        tasks.append(task) // Додаємо нове завдання до масиву
+        tableView.reloadData() // Оновлюємо таблицю
     }
 }
