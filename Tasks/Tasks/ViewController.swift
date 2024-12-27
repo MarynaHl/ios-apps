@@ -15,20 +15,17 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Налаштування делегатів для UITableView
+
         tableView.delegate = self
         tableView.dataSource = self
     }
 
-    // Обробка натискання кнопки "Add"
     @IBAction func didTapAdd() {
-        // Переходимо до EntryViewController
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let entryVC = storyboard.instantiateViewController(withIdentifier: "EntryViewController") as? EntryViewController else {
             return
         }
         
-        // Встановлюємо delegate
         entryVC.delegate = self
         navigationController?.pushViewController(entryVC, animated: true)
     }
@@ -59,7 +56,7 @@ extension ViewController: UITableViewDataSource {
 // MARK: - TaskDelegate Implementation
 extension ViewController: TaskDelegate {
     func didSaveTask(_ task: String) {
-        tasks.append(task) // Додаємо нове завдання до масиву
-        tableView.reloadData() // Оновлюємо таблицю
+        tasks.append(task)
+        tableView.reloadData()
     }
 }

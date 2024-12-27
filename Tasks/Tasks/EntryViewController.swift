@@ -1,6 +1,5 @@
 import UIKit
 
-// Протокол для передачі даних назад до ViewController
 protocol TaskDelegate: AnyObject {
     func didSaveTask(_ task: String)
 }
@@ -9,7 +8,7 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet var field: UITextField!
     
-    weak var delegate: TaskDelegate? // Делегат для передачі даних
+    weak var delegate: TaskDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,7 +18,7 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         saveTask()
-        textField.resignFirstResponder() // Закриваємо клавіатуру
+        textField.resignFirstResponder()
         return true
     }
 
@@ -28,7 +27,7 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
             print("Task field is empty")
             return
         }
-        delegate?.didSaveTask(taskText) // Передаємо нове завдання через делегат
-        navigationController?.popViewController(animated: true) // Повертаємося назад
+        delegate?.didSaveTask(taskText) 
+        navigationController?.popViewController(animated: true)
     }
 }
