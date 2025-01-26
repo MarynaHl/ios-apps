@@ -1,18 +1,24 @@
-import SwiftUI // Імпортуємо SwiftUI для роботи з інтерфейсом
+import SwiftUI // Імпортуємо SwiftUI для створення інтерфейсу
 
 struct ContentView: View {
-    @State private var name = "" // Створюємо властивість @State для збереження введеного тексту
+    let students = ["Harry", "Hermione", "Ron"] // Масив з іменами студентів
+    @State private var selectedStudent = "Harry" // Вибраний студент (змінюється)
 
     var body: some View {
-        Form { // Створюємо форму
-            TextField("Enter your name", text: $name)
-            // TextField використовує $name для двостороннього зв’язування
-            Text("Your name is \(name)")
-            // Text лише читає значення name, тому $ не використовується
+        NavigationStack { // Додає навігаційну панель
+            Form { // Форма для групування елементів
+                Picker("Select your student", selection: $selectedStudent) {
+                    // Створюємо Picker з двостороннім зв’язуванням
+                    ForEach(students, id: \.self) { student in
+                        Text(student) // Відображаємо ім’я студента
+                    }
+                }
+            }
+            .navigationTitle("Students") // Заголовок у навігаційній панелі
         }
     }
 }
 
 #Preview {
-    ContentView() // Відображення попереднього перегляду у SwiftUI
+    ContentView() // Відображення попереднього перегляду
 }
