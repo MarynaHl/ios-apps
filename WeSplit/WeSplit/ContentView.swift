@@ -1,20 +1,20 @@
-import SwiftUI // Імпортуємо фреймворк для роботи з інтерфейсом
+import SwiftUI // Імпортуємо SwiftUI для створення інтерфейсу
 
 struct ContentView: View {
     var body: some View {
-        Form { // Створюємо форму
-            Section { // Перша секція
-                Text("Hello, world!") // Рядок тексту
+        // Додаємо NavigationStack для навігаційної панелі
+        NavigationStack {
+            Form { // Форма для введення даних
+                Section { // Секція для групування елементів
+                    Text("Hello, world!") // Текстовий елемент
+                }
             }
-            
-            Section { // Друга секція
-                Text("This is row 1") // Текстовий рядок
-                Text("This is row 2") // Ще один текстовий рядок
-            }
+            .navigationTitle("SwiftUI") // Заголовок навігаційної панелі
+            .navigationBarTitleDisplayMode(.inline) // Робимо заголовок компактним
         }
     }
 }
 
 #Preview {
-    ContentView() // Відображаємо попередній перегляд форми
+    ContentView() // Відображення попереднього перегляду у SwiftUI
 }
