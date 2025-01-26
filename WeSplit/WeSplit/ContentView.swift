@@ -1,20 +1,20 @@
-import SwiftUI // Імпорт SwiftUI для роботи з інтерфейсом
+import SwiftUI // Імпортуємо фреймворк для роботи з інтерфейсом
 
-// Структура ContentView реалізує протокол View
 struct ContentView: View {
-    // Обов’язкова властивість body, що визначає, як виглядатиме інтерфейс
     var body: some View {
-        VStack { // VStack розташовує елементи вертикально
-            Image(systemName: "globe") // Іконка із системного набору SF Symbols
-                .imageScale(.large) // Робить іконку великою
-                .foregroundStyle(.tint) // Застосовує колір (залежить від теми)
-            Text("Hello, world!") // Текстовий елемент
+        Form { // Створюємо форму
+            Section { // Перша секція
+                Text("Hello, world!") // Рядок тексту
+            }
+            
+            Section { // Друга секція
+                Text("This is row 1") // Текстовий рядок
+                Text("This is row 2") // Ще один текстовий рядок
+            }
         }
-        .padding() // Додає відступи навколо VStack
     }
 }
 
-// Код прев'ю для відображення інтерфейсу в Xcode
 #Preview {
-    ContentView() // Викликає ContentView для прев’ю
+    ContentView() // Відображаємо попередній перегляд форми
 }
