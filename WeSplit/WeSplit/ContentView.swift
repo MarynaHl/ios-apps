@@ -1,20 +1,28 @@
-import SwiftUI // Імпортуємо SwiftUI для створення інтерфейсу
+import SwiftUI // Імпортуємо SwiftUI для роботи з інтерфейсом
 
 struct ContentView: View {
-    let students = ["Harry", "Hermione", "Ron"] // Масив з іменами студентів
-    @State private var selectedStudent = "Harry" // Вибраний студент (змінюється)
+    // Властивості для зберігання стану програми
+    @State private var checkAmount = 0.0 // Сума рахунку
+    @State private var numberOfPeople = 2 // Кількість осіб
+    @State private var tipPercentage = 20 // Відсоток чайових
+    
+    // Масив варіантів для чайових
+    let tipPercentages = [10, 15, 20, 25, 0]
 
     var body: some View {
-        NavigationStack { // Додає навігаційну панель
-            Form { // Форма для групування елементів
-                Picker("Select your student", selection: $selectedStudent) {
-                    // Створюємо Picker з двостороннім зв’язуванням
-                    ForEach(students, id: \.self) { student in
-                        Text(student) // Відображаємо ім’я студента
-                    }
-                }
+        Form { // Створюємо форму
+            Section { // Перша секція: Введення суми
+                TextField(
+                    "Amount",
+                    value: $checkAmount,
+                    format: .currency(code: Locale.current.currency?.identifier ?? "USD")
+                )
+                .keyboardType(.decimalPad) // Клавіатура для введення чисел із десятковою точкою
             }
-            .navigationTitle("Students") // Заголовок у навігаційній панелі
+            
+            Section { // Друга секція: Відображення введеної суми
+                Text(checkAmount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
+            }
         }
     }
 }
