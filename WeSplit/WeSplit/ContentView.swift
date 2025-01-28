@@ -8,6 +8,21 @@ struct ContentView: View {
     // Array of possible tip percentages
     let tipPercentages = [10, 15, 20, 25, 0]
 
+    // Computed property to calculate the total amount per person
+    var totalPerPerson: Double {
+        let peopleCount = Double(numberOfPeople + 2) // Adjust for the picker offset
+        let tipSelection = Double(tipPercentage) // Convert tip percentage to Double
+
+        // Calculate the total tip value
+        let tipValue = checkAmount / 100 * tipSelection
+        // Calculate the grand total including the tip
+        let grandTotal = checkAmount + tipValue
+        // Divide the grand total by the number of people
+        let amountPerPerson = grandTotal / peopleCount
+
+        return amountPerPerson // Return the calculated amount per person
+    }
+
     var body: some View {
         NavigationStack {
             Form {
@@ -38,9 +53,9 @@ struct ContentView: View {
                     .pickerStyle(.segmented) // Display options as a segmented control
                 }
 
-                // Placeholder section for the final result (to be updated later)
+                // Section to display the total amount per person
                 Section {
-                    Text(checkAmount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
+                    Text(totalPerPerson, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
                 }
             }
             .navigationTitle("WeSplit") // Title for the navigation stack
