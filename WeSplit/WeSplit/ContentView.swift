@@ -1,32 +1,39 @@
-import SwiftUI // Імпортуємо SwiftUI для роботи з інтерфейсом
+import SwiftUI
 
 struct ContentView: View {
-    // Властивості для зберігання стану програми
-    @State private var checkAmount = 0.0 // Сума рахунку
-    @State private var numberOfPeople = 2 // Кількість осіб
-    @State private var tipPercentage = 20 // Відсоток чайових
-    
-    // Масив варіантів для чайових
+    // Властивість для зберігання суми рахунку
+    @State private var checkAmount: Double = 0.0 // @State відстежує зміни і оновлює UI
+
+    // Властивість для кількості людей
+    @State private var numberOfPeople: Int = 2 // Початкове значення - 2 людини
+
+    // Властивість для відсотка чайових
+    @State private var tipPercentage: Int = 20 // Початкове значення - 20%
+
+    // Можливі значення для відсотка чайових
     let tipPercentages = [10, 15, 20, 25, 0]
 
     var body: some View {
-        Form { // Створюємо форму
-            Section { // Перша секція: Введення суми
+        Form { // Формуємо прокручуваний список елементів
+            Section { // Секція для введення даних
                 TextField(
-                    "Amount",
-                    value: $checkAmount,
-                    format: .currency(code: Locale.current.currency?.identifier ?? "USD")
+                    "Amount", // Текст-підказка у полі введення
+                    value: $checkAmount, // Двосторонній зв'язок із змінною
+                    format: .currency(code: Locale.current.currency?.identifier ?? "USD") // Формат для локальної валюти
                 )
-                .keyboardType(.decimalPad) // Клавіатура для введення чисел із десятковою точкою
+                .keyboardType(.decimalPad) // Використання числової клавіатури із десятковою точкою
             }
-            
-            Section { // Друга секція: Відображення введеної суми
+
+            Section { // Секція для відображення введеної суми
                 Text(checkAmount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
+                // Відображаємо суму в локальній валюті
             }
         }
     }
 }
 
-#Preview {
-    ContentView() // Відображення попереднього перегляду
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
 }
