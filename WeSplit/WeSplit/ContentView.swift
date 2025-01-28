@@ -1,39 +1,49 @@
 import SwiftUI
 
 struct ContentView: View {
-    // Властивість для зберігання суми рахунку
-    @State private var checkAmount: Double = 0.0
+    @State private var checkAmount: Double = 0.0 // Amount of the check
+    @State private var numberOfPeople: Int = 2 // Number of people sharing the bill
+    @State private var tipPercentage: Int = 20 // Tip percentage selected by the user
 
-    // Властивість для кількості людей
-    @State private var numberOfPeople: Int = 2
-
-    // Властивість для відсотка чайових
-    @State private var tipPercentage: Int = 20
-
-    // Масив можливих відсотків чайових
+    // Array of possible tip percentages
     let tipPercentages = [10, 15, 20, 25, 0]
 
     var body: some View {
-        NavigationStack { // Додаємо навігаційний стек для підтримки переходів
-            Form { // Формуємо структуру форми
-                Section { // Секція для введення суми рахунку
+        NavigationStack {
+            Form {
+                // Section for the check amount and number of people
+                Section {
                     TextField(
-                        "Amount", // Підказка для поля
-                        value: $checkAmount, // Двосторонній зв'язок із змінною
-                        format: .currency(code: Locale.current.currency?.identifier ?? "USD") // Формат для валюти
+                        "Amount", // Placeholder text for the field
+                        value: $checkAmount, // Two-way binding for the check amount
+                        format: .currency(code: Locale.current.currency?.identifier ?? "USD") // Format as currency
                     )
-                    .keyboardType(.decimalPad) // Використовуємо числову клавіатуру із десятковою точкою
+                    .keyboardType(.decimalPad) // Use a keyboard suitable for entering decimal numbers
 
                     Picker("Number of people", selection: $numberOfPeople) {
-                        // Створюємо список значень від 2 до 99
-                        ForEach(2..<100) {
-                            Text("\($0) people") // Форматуємо текст для кожного значення
+                        ForEach(2..<100) { // Generate a range from 2 to 99
+                            Text("\($0) people") // Display the value with "people"
                         }
                     }
-                    .pickerStyle(.navigationLink) // Встановлюємо стиль для переходу в окремий екран
+                    .pickerStyle(.navigationLink) // Use a navigation link for the picker
+                }
+
+                // Section for selecting the tip percentage with a header
+                Section("How much tip do you want to leave?") {
+                    Picker("Tip percentage", selection: $tipPercentage) {
+                        ForEach(tipPercentages, id: \.self) { // Use the array of tip percentages
+                            Text($0, format: .percent) // Format each value as a percentage
+                        }
+                    }
+                    .pickerStyle(.segmented) // Display options as a segmented control
+                }
+
+                // Placeholder section for the final result (to be updated later)
+                Section {
+                    Text(checkAmount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
                 }
             }
-            .navigationTitle("WeSplit") // Заголовок форми в навігаційному стеку
+            .navigationTitle("WeSplit") // Title for the navigation stack
         }
     }
 }
