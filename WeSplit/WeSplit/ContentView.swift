@@ -8,16 +8,16 @@ struct ContentView: View {
     // Array of possible tip percentages
     let tipPercentages = [10, 15, 20, 25, 0]
 
+    // Focus state property for managing keyboard focus
+    @FocusState private var amountIsFocused: Bool
+
     // Computed property to calculate the total amount per person
     var totalPerPerson: Double {
         let peopleCount = Double(numberOfPeople + 2) // Adjust for the picker offset
         let tipSelection = Double(tipPercentage) // Convert tip percentage to Double
 
-        // Calculate the total tip value
         let tipValue = checkAmount / 100 * tipSelection
-        // Calculate the grand total including the tip
         let grandTotal = checkAmount + tipValue
-        // Divide the grand total by the number of people
         let amountPerPerson = grandTotal / peopleCount
 
         return amountPerPerson // Return the calculated amount per person
@@ -34,6 +34,7 @@ struct ContentView: View {
                         format: .currency(code: Locale.current.currency?.identifier ?? "USD") // Format as currency
                     )
                     .keyboardType(.decimalPad) // Use a keyboard suitable for entering decimal numbers
+                    .focused($amountIsFocused) // Bind focus state to the text field
 
                     Picker("Number of people", selection: $numberOfPeople) {
                         ForEach(2..<100) { // Generate a range from 2 to 99
@@ -59,6 +60,13 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("WeSplit") // Title for the navigation stack
+            .toolbar { // Add a toolbar with a "Done" button
+                if amountIsFocused { // Show the button only when the text field is focused
+                    Button("Done") {
+                        amountIsFocused = false // Dismiss the keyboard
+                    }
+                }
+            }
         }
     }
 }
