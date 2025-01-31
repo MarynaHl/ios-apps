@@ -1,38 +1,34 @@
 import SwiftUI
 
 struct ContentView: View {
-    // Змінна для суми рахунку (початкове значення 0.0)
-    @State private var checkAmount: Double = 0.0
-    
-    // Змінна для кількості людей (початкове значення 2)
-    @State private var numberOfPeople: Int = 2
-    
-    // Змінна для відсотка чайових (початкове значення 20%)
-    @State private var tipPercentage: Int = 20
+    @State private var checkAmount: Double = 0.0 // Введена сума рахунку
+    @State private var numberOfPeople: Int = 2 // Кількість людей, які ділять рахунок
+    @State private var tipPercentage: Int = 20 // Відсоток чайових
 
-    // Масив можливих відсотків чайових
-    let tipPercentages = [10, 15, 20, 25, 0]
+    let tipPercentages = [10, 15, 20, 25, 0] // Можливі значення чайових
 
     var body: some View {
-        NavigationStack {
+        NavigationStack { // Додаємо NavigationStack для підтримки переходів
             Form {
                 // Секція для введення суми рахунку
                 Section {
                     TextField(
-                        "Amount", // Підказка у полі введення
-                        value: $checkAmount, // Двосторонній зв'язок із змінною
+                        "Amount", // Підказка для користувача
+                        value: $checkAmount, // Двосторонній зв’язок із змінною
                         format: .currency(code: Locale.current.currency?.identifier ?? "USD") // Форматування валюти
                     )
-                    .keyboardType(.decimalPad) // Встановлення числової клавіатури з десятковою крапкою
-                }
+                    .keyboardType(.decimalPad) // Використання цифрової клавіатури
 
-                // Секція для відображення введеної суми
-                Section {
-                    Text(checkAmount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
-                    // Відображає введене значення як валюту
+                    // Вибір кількості людей, які ділять рахунок
+                    Picker("Number of people", selection: $numberOfPeople) {
+                        ForEach(2..<100) { // Генеруємо значення від 2 до 99
+                            Text("\($0) people") // Відображаємо значення як текст
+                        }
+                    }
+                    .pickerStyle(.navigationLink) // Відкриває новий екран для вибору
                 }
             }
-            .navigationTitle("WeSplit") // Заголовок у навігаційному стеку
+            .navigationTitle("WeSplit") // Встановлюємо заголовок для екрану
         }
     }
 }
