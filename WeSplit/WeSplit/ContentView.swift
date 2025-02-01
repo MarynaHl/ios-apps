@@ -7,13 +7,25 @@ struct ContentView: View {
 
     let tipPercentages = [10, 15, 20, 25, 0] // Можливі значення чайових
 
+    // Обчислювана змінна для підрахунку суми на кожного
+    var totalPerPerson: Double {
+        let peopleCount = Double(numberOfPeople + 2) // Коригуємо кількість людей
+        let tipSelection = Double(tipPercentage) // Конвертуємо відсоток чайових у Double
+
+        let tipValue = checkAmount / 100 * tipSelection // Обчислюємо суму чайових
+        let grandTotal = checkAmount + tipValue // Додаємо чайові до загальної суми
+        let amountPerPerson = grandTotal / peopleCount // Рахуємо суму на кожного
+
+        return amountPerPerson // Повертаємо обчислену суму
+    }
+
     var body: some View {
-        NavigationStack { // Додаємо NavigationStack для підтримки переходів
+        NavigationStack {
             Form {
-                // Секція для введення суми рахунку
+                // Секція для введення суми рахунку та вибору кількості людей
                 Section {
                     TextField(
-                        "Amount", // Підказка для користувача
+                        "Amount", // Підказка у полі введення
                         value: $checkAmount, // Двосторонній зв’язок із змінною
                         format: .currency(code: Locale.current.currency?.identifier ?? "USD") // Форматування валюти
                     )
@@ -27,8 +39,23 @@ struct ContentView: View {
                     }
                     .pickerStyle(.navigationLink) // Відкриває новий екран для вибору
                 }
+
+                // Секція для вибору відсотка чайових
+                Section("How much tip do you want to leave?") { // Заголовок секції
+                    Picker("Tip percentage", selection: $tipPercentage) {
+                        ForEach(tipPercentages, id: \.self) { // Використовуємо масив відсотків
+                            Text($0, format: .percent) // Форматуємо значення як %
+                        }
+                    }
+                    .pickerStyle(.segmented) // Використовуємо Segmented Control для компактного вигляду
+                }
+
+                // Секція для відображення загальної суми на кожного
+                Section("Total per person") {
+                    Text(totalPerPerson, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
+                }
             }
-            .navigationTitle("WeSplit") // Встановлюємо заголовок для екрану
+            .navigationTitle("WeSplit") // Встановлюємо заголовок екрану
         }
     }
 }
