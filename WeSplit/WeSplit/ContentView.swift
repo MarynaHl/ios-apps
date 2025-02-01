@@ -7,18 +7,19 @@ struct ContentView: View {
 
     @FocusState private var amountIsFocused: Bool // Відстежуємо фокус поля вводу
 
-    let tipPercentages = [10, 15, 20, 25, 0] // Можливі значення чайових
+    // Розширений вибір відсотків чайових (від 0 до 100%)
+    let tipPercentages = Array(0..<101)
+
+    // Обчислюємо загальну суму, враховуючи чайові
+    var grandTotal: Double {
+        let tipValue = checkAmount / 100 * Double(tipPercentage)
+        return checkAmount + tipValue
+    }
 
     // Обчислюємо загальну суму на кожного
     var totalPerPerson: Double {
         let peopleCount = Double(numberOfPeople + 2)
-        let tipSelection = Double(tipPercentage)
-
-        let tipValue = checkAmount / 100 * tipSelection
-        let grandTotal = checkAmount + tipValue
-        let amountPerPerson = grandTotal / peopleCount
-
-        return amountPerPerson
+        return grandTotal / peopleCount
     }
 
     var body: some View {
@@ -28,41 +29,46 @@ struct ContentView: View {
                 Section {
                     TextField(
                         "Amount", // Підказка у полі введення
-                        value: $checkAmount, // Двосторонній зв’язок із змінною
-                        format: .currency(code: Locale.current.currency?.identifier ?? "USD") // Форматування валюти
+                        value: $checkAmount,
+                        format: .currency(code: Locale.current.currency?.identifier ?? "USD")
                     )
-                    .keyboardType(.decimalPad) // Використання цифрової клавіатури
-                    .focused($amountIsFocused) // Прив’язуємо фокус до змінної amountIsFocused
+                    .keyboardType(.decimalPad)
+                    .focused($amountIsFocused)
 
                     // Вибір кількості людей
                     Picker("Number of people", selection: $numberOfPeople) {
                         ForEach(2..<100) {
-                            Text("\($0) people") // Відображаємо значення як текст
+                            Text("\($0) people")
                         }
                     }
                     .pickerStyle(.navigationLink)
                 }
 
-                // Секція для вибору відсотка чайових
+                // Нова секція для вибору відсотка чайових
                 Section("How much tip do you want to leave?") {
                     Picker("Tip percentage", selection: $tipPercentage) {
                         ForEach(tipPercentages, id: \.self) {
-                            Text($0, format: .percent) // Форматування як %
+                            Text($0, format: .percent)
                         }
                     }
-                    .pickerStyle(.segmented)
+                    .pickerStyle(.navigationLink) // Використовуємо окремий екран для вибору чайових
                 }
 
-                // Секція для відображення суми на кожного
-                Section("Total per person") {
+                // **Нова секція для загальної суми**
+                Section("Total amount for the check") {
+                    Text(grandTotal, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
+                }
+
+                // **Оновлена секція з заголовком "Amount per person"**
+                Section("Amount per person") {
                     Text(totalPerPerson, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
                 }
             }
-            .navigationTitle("WeSplit") // Заголовок
-            .toolbar { // Додаємо кнопку для закриття клавіатури
-                if amountIsFocused { // Показуємо кнопку, лише коли поле вводу активне
+            .navigationTitle("WeSplit")
+            .toolbar {
+                if amountIsFocused {
                     Button("Done") {
-                        amountIsFocused = false // Закриваємо клавіатуру
+                        amountIsFocused = false
                     }
                 }
             }
