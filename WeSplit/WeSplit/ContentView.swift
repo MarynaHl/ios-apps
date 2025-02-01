@@ -5,24 +5,26 @@ struct ContentView: View {
     @State private var numberOfPeople: Int = 2 // Кількість людей, які ділять рахунок
     @State private var tipPercentage: Int = 20 // Відсоток чайових
 
+    @FocusState private var amountIsFocused: Bool // Відстежуємо фокус поля вводу
+
     let tipPercentages = [10, 15, 20, 25, 0] // Можливі значення чайових
 
-    // Обчислювана змінна для підрахунку суми на кожного
+    // Обчислюємо загальну суму на кожного
     var totalPerPerson: Double {
-        let peopleCount = Double(numberOfPeople + 2) // Коригуємо кількість людей
-        let tipSelection = Double(tipPercentage) // Конвертуємо відсоток чайових у Double
+        let peopleCount = Double(numberOfPeople + 2)
+        let tipSelection = Double(tipPercentage)
 
-        let tipValue = checkAmount / 100 * tipSelection // Обчислюємо суму чайових
-        let grandTotal = checkAmount + tipValue // Додаємо чайові до загальної суми
-        let amountPerPerson = grandTotal / peopleCount // Рахуємо суму на кожного
+        let tipValue = checkAmount / 100 * tipSelection
+        let grandTotal = checkAmount + tipValue
+        let amountPerPerson = grandTotal / peopleCount
 
-        return amountPerPerson // Повертаємо обчислену суму
+        return amountPerPerson
     }
 
     var body: some View {
         NavigationStack {
             Form {
-                // Секція для введення суми рахунку та вибору кількості людей
+                // Секція для введення суми та вибору кількості людей
                 Section {
                     TextField(
                         "Amount", // Підказка у полі введення
@@ -30,32 +32,40 @@ struct ContentView: View {
                         format: .currency(code: Locale.current.currency?.identifier ?? "USD") // Форматування валюти
                     )
                     .keyboardType(.decimalPad) // Використання цифрової клавіатури
+                    .focused($amountIsFocused) // Прив’язуємо фокус до змінної amountIsFocused
 
-                    // Вибір кількості людей, які ділять рахунок
+                    // Вибір кількості людей
                     Picker("Number of people", selection: $numberOfPeople) {
-                        ForEach(2..<100) { // Генеруємо значення від 2 до 99
+                        ForEach(2..<100) {
                             Text("\($0) people") // Відображаємо значення як текст
                         }
                     }
-                    .pickerStyle(.navigationLink) // Відкриває новий екран для вибору
+                    .pickerStyle(.navigationLink)
                 }
 
                 // Секція для вибору відсотка чайових
-                Section("How much tip do you want to leave?") { // Заголовок секції
+                Section("How much tip do you want to leave?") {
                     Picker("Tip percentage", selection: $tipPercentage) {
-                        ForEach(tipPercentages, id: \.self) { // Використовуємо масив відсотків
-                            Text($0, format: .percent) // Форматуємо значення як %
+                        ForEach(tipPercentages, id: \.self) {
+                            Text($0, format: .percent) // Форматування як %
                         }
                     }
-                    .pickerStyle(.segmented) // Використовуємо Segmented Control для компактного вигляду
+                    .pickerStyle(.segmented)
                 }
 
-                // Секція для відображення загальної суми на кожного
+                // Секція для відображення суми на кожного
                 Section("Total per person") {
                     Text(totalPerPerson, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
                 }
             }
-            .navigationTitle("WeSplit") // Встановлюємо заголовок екрану
+            .navigationTitle("WeSplit") // Заголовок
+            .toolbar { // Додаємо кнопку для закриття клавіатури
+                if amountIsFocused { // Показуємо кнопку, лише коли поле вводу активне
+                    Button("Done") {
+                        amountIsFocused = false // Закриваємо клавіатуру
+                    }
+                }
+            }
         }
     }
 }
