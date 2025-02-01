@@ -2,33 +2,36 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            // Заголовок гри
-            Text("Guess the Flag")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-
-            // Градієнтний фон
-            LinearGradient(gradient: Gradient(colors: [.blue, .white]), startPoint: .top, endPoint: .bottom)
+        ZStack {
+            // Фон гри - градієнт
+            LinearGradient(gradient: Gradient(colors: [.blue, .black]), startPoint: .top, endPoint: .bottom)
                 .edgesIgnoringSafeArea(.all)
 
-            // Зображення прапора
-            Image("flag") // Замініть на реальне зображення прапора
-                .resizable()
-                .scaledToFit()
-                .frame(width: 200, height: 100)
+            VStack {
+                // Заголовок
+                Text("Guess the Flag")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
 
-            // Кнопка вибору прапора
-            Button("Select this flag") {
-                print("Flag selected!") // У майбутньому тут буде логіка гри
+                // Кнопки з прапорами
+                VStack(spacing: 20) {
+                    ForEach(0..<3) { _ in
+                        Button(action: {
+                            print("Flag tapped")
+                        }) {
+                            Image("example-flag") // Замініть на справжнє зображення
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 200, height: 100)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                .shadow(radius: 5)
+                        }
+                    }
+                }
+                .padding()
             }
-            .padding()
-            .background(Color.blue)
-            .foregroundColor(.white)
-            .clipShape(Capsule())
-
         }
-        .padding()
     }
 }
 
