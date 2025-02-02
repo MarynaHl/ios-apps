@@ -3,26 +3,23 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         ZStack {
-            // Фон
-            Color.gray.ignoresSafeArea() // Сірий фон
+            // Градієнтний фон
+            LinearGradient(
+                gradient: Gradient(colors: [.red, .blue]),
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
 
-            // Сітка 3x3
+            // Матове скло
             VStack {
-                HStack {
-                    Text("1").frame(width: 50, height: 50).background(Color.red)
-                    Text("2").frame(width: 50, height: 50).background(Color.green)
-                    Text("3").frame(width: 50, height: 50).background(Color.blue)
-                }
-                HStack {
-                    Text("4").frame(width: 50, height: 50).background(Color.yellow)
-                    Text("5").frame(width: 50, height: 50).background(Color.orange)
-                    Text("6").frame(width: 50, height: 50).background(Color.purple)
-                }
-                HStack {
-                    Text("7").frame(width: 50, height: 50).background(Color.gray)
-                    Text("8").frame(width: 50, height: 50).background(Color.pink)
-                    Text("9").frame(width: 50, height: 50).background(Color.cyan)
-                }
+                Text("Frosted Glass Effect")
+                    .foregroundColor(.white)
+                    .font(.largeTitle)
+                    .padding()
+                    .background(.ultraThinMaterial) // Ефект матового скла
+                    .cornerRadius(15)
+                    .shadow(radius: 10)
             }
         }
     }
