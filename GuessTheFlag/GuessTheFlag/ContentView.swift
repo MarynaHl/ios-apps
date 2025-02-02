@@ -3,23 +3,19 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         ZStack {
-            // Градієнтний фон
-            LinearGradient(
-                gradient: Gradient(colors: [.red, .blue]),
-                startPoint: .top,
-                endPoint: .bottom
-            )
-            .ignoresSafeArea()
+            // Фон із фіксованими розмірами
+            Color.blue
+                .frame(minWidth: 200, maxWidth: .infinity, maxHeight: 300)
+                .ignoresSafeArea()
 
-            // Матове скло
+            // Текст
             VStack {
-                Text("Frosted Glass Effect")
+                Text("Custom Frame Example")
                     .foregroundColor(.white)
-                    .font(.largeTitle)
+                    .font(.headline)
                     .padding()
-                    .background(.ultraThinMaterial) // Ефект матового скла
-                    .cornerRadius(15)
-                    .shadow(radius: 10)
+                    .background(Color.black.opacity(0.8))
+                    .cornerRadius(10)
             }
         }
     }
