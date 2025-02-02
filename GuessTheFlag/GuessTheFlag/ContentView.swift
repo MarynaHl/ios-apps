@@ -3,16 +3,14 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         ZStack {
-            // Радіальний градієнт
-            RadialGradient(
-                colors: [.blue, .black],
-                center: .center,
-                startRadius: 20,
-                endRadius: 200
+            // Конічний градієнт
+            AngularGradient(
+                colors: [.red, .yellow, .green, .blue, .purple, .red],
+                center: .center
             )
             .ignoresSafeArea()
 
-            Text("Radial Gradient Example")
+            Text("Angular Gradient Example")
                 .font(.largeTitle)
                 .foregroundColor(.white)
         }
