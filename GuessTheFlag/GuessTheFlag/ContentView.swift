@@ -3,18 +3,20 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         ZStack {
-            // Фон із фіксованими розмірами
-            Color.blue
-                .frame(minWidth: 200, maxWidth: .infinity, maxHeight: 300)
-                .ignoresSafeArea()
+            // Перехід кольорів у VStack
+            VStack(spacing: 0) {
+                Color.red.frame(height: UIScreen.main.bounds.height / 2)
+                Color.blue.frame(height: UIScreen.main.bounds.height / 2)
+            }
+            .ignoresSafeArea()
 
-            // Текст
+            // Текст поверх фону
             VStack {
-                Text("Custom Frame Example")
+                Text("Color Transition Example")
                     .foregroundColor(.white)
-                    .font(.headline)
+                    .font(.title)
                     .padding()
-                    .background(Color.black.opacity(0.8))
+                    .background(Color.black.opacity(0.6))
                     .cornerRadius(10)
             }
         }
