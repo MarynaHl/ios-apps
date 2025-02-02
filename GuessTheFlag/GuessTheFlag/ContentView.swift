@@ -1,23 +1,27 @@
 import SwiftUI
 
-struct VStackExample: View {
+struct HStackExample: View {
     var body: some View {
-        VStack(spacing: 20) { // Вертикальний стек із відступом між елементами
-            Text("Hello, world!") // Перший текстовий елемент
+        HStack(spacing: 30) { // Горизонтальний стек із відступами
+            Text("Left")
+                .font(.title)
+                .foregroundColor(.red)
+
+            Text("Center")
                 .font(.title)
                 .foregroundColor(.blue)
 
-            Text("This is inside a stack") // Другий текстовий елемент
-                .font(.headline)
+            Text("Right")
+                .font(.title)
                 .foregroundColor(.green)
         }
         .padding()
-        .border(Color.gray, width: 2) // Додаємо рамку, щоб бачити межі VStack
+        .border(Color.black, width: 2) // Додаємо рамку, щоб бачити межі HStack
     }
 }
 
-struct VStackExample_Previews: PreviewProvider {
+struct HStackExample_Previews: PreviewProvider {
     static var previews: some View {
-        VStackExample()
+        HStackExample()
     }
 }
