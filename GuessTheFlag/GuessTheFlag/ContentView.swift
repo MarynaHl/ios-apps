@@ -3,15 +3,18 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         ZStack {
-            // Лінійний градієнт
+            // Лінійний градієнт із зупинками
             LinearGradient(
-                colors: [.white, .black],
+                stops: [
+                    .init(color: .white, location: 0.45),
+                    .init(color: .black, location: 0.55)
+                ],
                 startPoint: .top,
                 endPoint: .bottom
             )
-            .ignoresSafeArea() // Фон заповнює весь екран
+            .ignoresSafeArea()
 
-            Text("Linear Gradient Example")
+            Text("Gradient with Stops")
                 .font(.largeTitle)
                 .foregroundColor(.white)
         }
