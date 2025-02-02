@@ -3,22 +3,26 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         ZStack {
-            // Градієнтний фон
-            LinearGradient(
-                gradient: Gradient(colors: [.blue, .black]),
-                startPoint: .top,
-                endPoint: .bottom
-            )
-            .ignoresSafeArea() // Фон займає весь екран
+            // Фон
+            Color.gray.ignoresSafeArea() // Сірий фон
 
-            // Текст у центрі
+            // Сітка 3x3
             VStack {
-                Text("Gradient Background Example")
-                    .foregroundColor(.white)
-                    .font(.largeTitle)
-                    .padding()
-                    .background(Color.black.opacity(0.7)) // Прозорий чорний фон
-                    .cornerRadius(10)
+                HStack {
+                    Text("1").frame(width: 50, height: 50).background(Color.red)
+                    Text("2").frame(width: 50, height: 50).background(Color.green)
+                    Text("3").frame(width: 50, height: 50).background(Color.blue)
+                }
+                HStack {
+                    Text("4").frame(width: 50, height: 50).background(Color.yellow)
+                    Text("5").frame(width: 50, height: 50).background(Color.orange)
+                    Text("6").frame(width: 50, height: 50).background(Color.purple)
+                }
+                HStack {
+                    Text("7").frame(width: 50, height: 50).background(Color.gray)
+                    Text("8").frame(width: 50, height: 50).background(Color.pink)
+                    Text("9").frame(width: 50, height: 50).background(Color.cyan)
+                }
             }
         }
     }
