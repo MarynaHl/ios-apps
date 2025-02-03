@@ -2,21 +2,17 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack(spacing: 20) {
-            Button("Button 1") { }
-                .buttonStyle(.bordered)
-
-            Button("Button 2", role: .destructive) { }
-                .buttonStyle(.bordered)
-
-            Button("Button 3") { }
-                .buttonStyle(.borderedProminent)
-
-            Button("Button 4", role: .destructive) { }
-                .buttonStyle(.borderedProminent)
-                .tint(.mint)
+        VStack {
+            Button {
+                print("Button was tapped")
+            } label: {
+                Text("Custom Button")
+                    .padding()
+                    .foregroundStyle(.white)
+                    .background(Color.blue)
+                    .cornerRadius(10)
+            }
         }
-        .padding()
     }
 }
 
