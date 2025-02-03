@@ -2,12 +2,21 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Button("Delete selection", role: .destructive) {
-                print("Now deleting…")
-            }
-            .padding()
+        VStack(spacing: 20) {
+            Button("Button 1") { }
+                .buttonStyle(.bordered)
+
+            Button("Button 2", role: .destructive) { }
+                .buttonStyle(.bordered)
+
+            Button("Button 3") { }
+                .buttonStyle(.borderedProminent)
+
+            Button("Button 4", role: .destructive) { }
+                .buttonStyle(.borderedProminent)
+                .tint(.mint)
         }
+        .padding()
     }
 }
 
