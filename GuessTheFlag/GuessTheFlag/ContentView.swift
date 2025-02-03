@@ -3,16 +3,21 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         VStack {
+            Button("Edit", systemImage: "pencil") {
+                print("Edit button was tapped")
+            }
+
             Button {
-                print("Button was tapped")
+                print("Edit button was tapped")
             } label: {
-                Text("Custom Button")
+                Label("Edit", systemImage: "pencil")
                     .padding()
                     .foregroundStyle(.white)
-                    .background(Color.blue)
+                    .background(Color.red)
                     .cornerRadius(10)
             }
         }
+        .padding()
     }
 }
 
