@@ -3,7 +3,7 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         VStack {
-            Button("Delete selection") {
+            Button("Delete selection", role: .destructive) {
                 print("Now deleting…")
             }
             .padding()
