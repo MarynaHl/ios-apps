@@ -2,17 +2,11 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        ZStack {
-            // Конічний градієнт
-            AngularGradient(
-                colors: [.red, .yellow, .green, .blue, .purple, .red],
-                center: .center
-            )
-            .ignoresSafeArea()
-
-            Text("Angular Gradient Example")
-                .font(.largeTitle)
-                .foregroundColor(.white)
+        VStack {
+            Button("Delete selection") {
+                print("Now deleting…")
+            }
+            .padding()
         }
     }
 }
