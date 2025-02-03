@@ -8,7 +8,10 @@ struct ContentView: View {
             showingAlert = true
         }
         .alert("Important message", isPresented: $showingAlert) {
-            Button("OK") { }
+            Button("Delete", role: .destructive) {
+                print("Item deleted")
+            }
+            Button("Cancel", role: .cancel) { }
         }
     }
 }
