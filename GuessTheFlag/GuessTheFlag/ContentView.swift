@@ -35,7 +35,8 @@ struct ContentView: View {
                         Image(countries[number])
                             .resizable()
                             .scaledToFit()
-                            .clipShape(.capsule) // Капсульна форма
+                            .frame(width: 200, height: 120) // Прямокутний розмір
+                            .cornerRadius(10) // Закруглення кутів (опціонально)
                             .shadow(radius: 5) // Тінь для виділення
                     }
                 }
