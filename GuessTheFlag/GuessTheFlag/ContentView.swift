@@ -11,8 +11,8 @@ struct ContentView: View {
 
     var body: some View {
         ZStack {
-            // Фон
-            Color.blue
+            // Фон: градієнт від синього до чорного
+            LinearGradient(colors: [.blue, .black], startPoint: .top, endPoint: .bottom)
                 .ignoresSafeArea()
 
             VStack(spacing: 30) {
@@ -20,12 +20,11 @@ struct ContentView: View {
                 VStack {
                     Text("Tap the flag of")
                         .foregroundStyle(.white)
-                        .font(.headline)
+                        .font(.subheadline.weight(.heavy)) // Менший жирний текст
 
                     Text(countries[correctAnswer])
                         .foregroundStyle(.white)
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
+                        .font(.largeTitle.weight(.semibold)) // Великий напівжирний текст
                 }
 
                 // Кнопки із прапорами
@@ -36,8 +35,8 @@ struct ContentView: View {
                         Image(countries[number])
                             .resizable()
                             .scaledToFit()
-                            .clipShape(Capsule())
-                            .shadow(radius: 5)
+                            .clipShape(.capsule) // Капсульна форма
+                            .shadow(radius: 5) // Тінь для виділення
                     }
                 }
             }
