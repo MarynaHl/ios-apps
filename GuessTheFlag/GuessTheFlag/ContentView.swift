@@ -2,20 +2,24 @@ import SwiftUI
 
 struct ContentView: View {
     // Дані для гри
-    var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Spain", "UK", "Ukraine", "US"]
-    var correctAnswer = Int.random(in: 0...2) // Випадковий правильний варіант
+    @State private var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Spain", "UK", "Ukraine", "US"].shuffled()
+    @State private var correctAnswer = Int.random(in: 0...2)
+
+    // Змінні для алерта
+    @State private var showingScore = false
+    @State private var scoreTitle = ""
 
     var body: some View {
         ZStack {
             // Фон
             Color.blue
-                .ignoresSafeArea() // Заливка фону до країв екрану
+                .ignoresSafeArea()
 
             VStack(spacing: 30) {
                 // Текст із завданням
                 VStack {
                     Text("Tap the flag of")
-                        .foregroundStyle(.white) // Білий текст для контрасту з синім фоном
+                        .foregroundStyle(.white)
                         .font(.headline)
 
                     Text(countries[correctAnswer])
@@ -27,18 +31,39 @@ struct ContentView: View {
                 // Кнопки із прапорами
                 ForEach(0..<3) { number in
                     Button {
-                        print("Flag \(countries[number]) tapped")
+                        flagTapped(number) // Виклик методу для перевірки
                     } label: {
-                        Image(countries[number]) // Прапор із ресурсу
+                        Image(countries[number])
                             .resizable()
-                            .scaledToFit() // Масштабування для збереження пропорцій
-                            .clipShape(Capsule()) // Форма кнопки
-                            .shadow(radius: 5) // Тінь для візуальної чіткості
+                            .scaledToFit()
+                            .clipShape(Capsule())
+                            .shadow(radius: 5)
                     }
                 }
             }
-            .padding() // Відступи для зовнішньої VStack
+            .padding()
         }
+        .alert(scoreTitle, isPresented: $showingScore) {
+            Button("Continue", action: askQuestion) // Кнопка для продовження гри
+        } message: {
+            Text("Your score is ???") // Змінити на динамічний рахунок у майбутньому
+        }
+    }
+
+    // Перевірка правильності відповіді
+    func flagTapped(_ number: Int) {
+        if number == correctAnswer {
+            scoreTitle = "Correct"
+        } else {
+            scoreTitle = "Wrong"
+        }
+        showingScore = true
+    }
+
+    // Оновлення гри
+    func askQuestion() {
+        countries.shuffle() // Перетасовуємо прапори
+        correctAnswer = Int.random(in: 0...2) // Нова правильна відповідь
     }
 }
 
