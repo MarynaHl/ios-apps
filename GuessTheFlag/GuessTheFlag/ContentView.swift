@@ -1,69 +1,94 @@
 import SwiftUI
 
 struct ContentView: View {
-    // Дані для гри
     @State private var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Spain", "UK", "Ukraine", "US"].shuffled()
     @State private var correctAnswer = Int.random(in: 0...2)
-
-    // Змінні для алерта
     @State private var showingScore = false
     @State private var scoreTitle = ""
+    @State private var userScore = 0 // Зберігання рахунку користувача
+    @State private var currentQuestion = 1 // Лічильник запитань
+    @State private var showingFinalScore = false // Фінальний алерт після 8 запитань
 
     var body: some View {
         ZStack {
-            // Фон: градієнт від синього до чорного
             LinearGradient(colors: [.blue, .black], startPoint: .top, endPoint: .bottom)
                 .ignoresSafeArea()
 
             VStack(spacing: 30) {
-                // Текст із завданням
                 VStack {
                     Text("Tap the flag of")
                         .foregroundStyle(.white)
-                        .font(.subheadline.weight(.heavy)) // Менший жирний текст
+                        .font(.subheadline.weight(.heavy))
 
                     Text(countries[correctAnswer])
                         .foregroundStyle(.white)
-                        .font(.largeTitle.weight(.semibold)) // Великий напівжирний текст
+                        .font(.largeTitle.weight(.semibold))
                 }
 
-                // Кнопки із прапорами
                 ForEach(0..<3) { number in
                     Button {
-                        flagTapped(number) // Виклик методу для перевірки
+                        flagTapped(number)
                     } label: {
                         Image(countries[number])
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 200, height: 120) // Прямокутний розмір
-                            .cornerRadius(10) // Закруглення кутів (опціонально)
-                            .shadow(radius: 5) // Тінь для виділення
+                            .frame(width: 200, height: 120)
+                            .cornerRadius(10)
+                            .shadow(radius: 5)
                     }
                 }
+
+                // Відображення рахунку
+                Text("Score: \(userScore)")
+                    .foregroundStyle(.white)
+                    .font(.title2.weight(.bold))
             }
             .padding()
         }
+        // Алерт після кожного вибору
         .alert(scoreTitle, isPresented: $showingScore) {
-            Button("Continue", action: askQuestion) // Кнопка для продовження гри
+            Button("Continue", action: askQuestion)
         } message: {
-            Text("Your score is ???") // Змінити на динамічний рахунок у майбутньому
+            Text("Your score is \(userScore)")
+        }
+        // Фінальний алерт після завершення гри
+        .alert("Game Over", isPresented: $showingFinalScore) {
+            Button("Restart", action: resetGame)
+        } message: {
+            Text("Your final score is \(userScore) out of 8")
         }
     }
 
-    // Перевірка правильності відповіді
+    // Логіка обробки вибору прапора
     func flagTapped(_ number: Int) {
         if number == correctAnswer {
             scoreTitle = "Correct"
+            userScore += 1
         } else {
-            scoreTitle = "Wrong"
+            scoreTitle = "Wrong! That’s the flag of \(countries[number])"
         }
-        showingScore = true
+
+        // Перевірка кількості запитань
+        if currentQuestion == 8 {
+            showingFinalScore = true
+        } else {
+            showingScore = true
+        }
     }
 
-    // Оновлення гри
+    // Перехід до наступного запитання
     func askQuestion() {
-        countries.shuffle() // Перетасовуємо прапори
-        correctAnswer = Int.random(in: 0...2) // Нова правильна відповідь
+        countries.shuffle()
+        correctAnswer = Int.random(in: 0...2)
+        currentQuestion += 1
+    }
+
+    // Перезапуск гри
+    func resetGame() {
+        userScore = 0
+        currentQuestion = 1
+        countries.shuffle()
+        correctAnswer = Int.random(in: 0...2)
     }
 }
 
