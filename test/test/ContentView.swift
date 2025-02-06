@@ -1,17 +1,15 @@
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-        VStack {
-            exampleView()
-        }
-    }
+    @State private var isRed = true
     
-    func exampleView() -> some View {
-        Text("Це `some View`")
-            .font(.title)
+    var body: some View {
+        Text("Натисни на мене")
             .padding()
-            .background(Color.green)
+            .background(isRed ? Color.red : Color.blue)
+            .onTapGesture {
+                isRed.toggle()
+            }
     }
 }
 
