@@ -1,15 +1,17 @@
 import SwiftUI
 
-struct ContentView: View {
-    var title: some View {
+struct TitleView: View {
+    var body: some View {
         Text("Заголовок")
             .font(.largeTitle)
             .padding()
     }
-    
+}
+
+struct ContentView: View {
     var body: some View {
         VStack {
-            title
+            TitleView()
             Text("Основний контент")
         }
     }
