@@ -1,24 +1,25 @@
 import SwiftUI
 
-struct ContentView: View {
-    let motto1 = Text("Draco dormiens")
-    let motto2 = Text("nunquam titillandus")
-
-    @ViewBuilder var spells: some View {
-        Text("Lumos")
-        Text("Obliviate")
-    }
+// Кастомний View з повторюваним стилем
+struct CapsuleText: View {
+    var text: String
 
     var body: some View {
-        VStack {
-            motto1.foregroundStyle(.red)
-            motto2.foregroundStyle(.blue)
-            
-            spells
-                .font(.headline)
-                .padding()
-                .background(Color.yellow)
-                .cornerRadius(8)
+        Text(text)
+            .font(.largeTitle)
+            .padding()
+            .background(.blue)
+            .clipShape(.capsule)
+    }
+}
+
+struct ContentView: View {
+    var body: some View {
+        VStack(spacing: 10) {
+            CapsuleText(text: "First")
+                .foregroundStyle(.white) // Індивідуальний колір
+            CapsuleText(text: "Second")
+                .foregroundStyle(.yellow) // Індивідуальний колір
         }
         .padding()
     }
