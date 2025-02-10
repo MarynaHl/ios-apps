@@ -1,22 +1,17 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var useRedText = false
-
     var body: some View {
         VStack {
-            Button("Tap me!") {
-                useRedText.toggle()
-            }
-            .foregroundStyle(useRedText ? .red : .blue) // Умовна зміна кольору
-
-            Text("Color changes dynamically")
-                .padding()
-                .background(useRedText ? Color.yellow : Color.gray) // Умовний фон
-                .cornerRadius(10)
-                .animation(.easeInOut, value: useRedText) // Анімація зміни стану
+            Text("Gryffindor") // Перевизначає шрифт для цього конкретного тексту
+                .font(.largeTitle)
+            
+            Text("Hufflepuff")
+            Text("Ravenclaw")
+            Text("Slytherin")
         }
-        .padding()
+        .font(.title) // Environment-модифікатор застосовується до всіх дочірніх Text
+        .blur(radius: 5) // Регулярний модифікатор, який застосовується до всього VStack
     }
 }
 
