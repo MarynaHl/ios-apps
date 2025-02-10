@@ -1,17 +1,26 @@
 import SwiftUI
 
 struct ContentView: View {
+    let motto1 = Text("Draco dormiens")
+    let motto2 = Text("nunquam titillandus")
+
+    @ViewBuilder var spells: some View {
+        Text("Lumos")
+        Text("Obliviate")
+    }
+
     var body: some View {
         VStack {
-            Text("Gryffindor") // Перевизначає шрифт для цього конкретного тексту
-                .font(.largeTitle)
+            motto1.foregroundStyle(.red)
+            motto2.foregroundStyle(.blue)
             
-            Text("Hufflepuff")
-            Text("Ravenclaw")
-            Text("Slytherin")
+            spells
+                .font(.headline)
+                .padding()
+                .background(Color.yellow)
+                .cornerRadius(8)
         }
-        .font(.title) // Environment-модифікатор застосовується до всіх дочірніх Text
-        .blur(radius: 5) // Регулярний модифікатор, який застосовується до всього VStack
+        .padding()
     }
 }
 
