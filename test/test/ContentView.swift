@@ -1,22 +1,22 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var useRedText = false
+
     var body: some View {
         VStack {
-            Text("Привіт, світ!") // Перше представлення
-                .font(.title)
-                .padding()
-            
-            Text("SwiftUI використовує some View") // Друге представлення
-                .foregroundColor(.blue)
-            
-            Button("Дізнатися більше") {
-                print("Кнопка натиснута")
+            Button("Tap me!") {
+                useRedText.toggle()
             }
-            .padding()
-            .background(Color.green)
-            .cornerRadius(10)
+            .foregroundStyle(useRedText ? .red : .blue) // Умовна зміна кольору
+
+            Text("Color changes dynamically")
+                .padding()
+                .background(useRedText ? Color.yellow : Color.gray) // Умовний фон
+                .cornerRadius(10)
+                .animation(.easeInOut, value: useRedText) // Анімація зміни стану
         }
+        .padding()
     }
 }
 
