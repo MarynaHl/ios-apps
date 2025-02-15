@@ -1,61 +1,37 @@
-import SwiftUI
+import SwiftUI // Імпортуємо SwiftUI
 
-// Кастомний модифікатор для заголовків
-struct Title: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .font(.largeTitle)
-            .foregroundStyle(.white)
-            .padding()
-            .background(.blue)
-            .clipShape(.rect(cornerRadius: 10))
-    }
-}
+// Створення кастомного контейнера GridStack
+struct GridStack<Content: View>: View {
+    let rows: Int // Кількість рядків
+    let columns: Int // Кількість колонок
+    @ViewBuilder let content: (Int, Int) -> Content // Замикання, яке повертає View
 
-// Додаємо зручний виклик модифікатора
-extension View {
-    func titleStyle() -> some View {
-        modifier(Title())
-    }
-}
-
-// Кастомний модифікатор Watermark
-struct Watermark: ViewModifier {
-    var text: String
-
-    func body(content: Content) -> some View {
-        ZStack(alignment: .bottomTrailing) {
-            content
-            Text(text)
-                .font(.caption)
-                .foregroundStyle(.white)
-                .padding(5)
-                .background(.black)
+    var body: some View {
+        VStack { // Відображення елементів вертикально
+            ForEach(0..<rows, id: \.self) { row in
+                HStack { // Відображення елементів горизонтально
+                    ForEach(0..<columns, id: \.self) { column in
+                        content(row, column) // Вставляємо вміст для кожної комірки
+                    }
+                }
+            }
         }
     }
 }
 
-// Додаємо метод для спрощеного виклику watermark
-extension View {
-    func watermarked(with text: String) -> some View {
-        modifier(Watermark(text: text))
-    }
-}
-
+// Використання GridStack у ContentView
 struct ContentView: View {
     var body: some View {
-        VStack(spacing: 20) {
-            Text("SwiftUI Modifiers")
-                .titleStyle() // Використання кастомного модифікатора
-            
-            Color.blue
-                .frame(width: 300, height: 200)
-                .watermarked(with: "Hacking with Swift") // Водяний знак
+        GridStack(rows: 4, columns: 4) { row, col in
+            VStack { // Додаємо вміст у кожну комірку
+                Image(systemName: "\(row * 4 + col).circle") // Номер комірки
+                Text("R\(row) C\(col)") // Текст із координатами комірки
+            }
+            .padding()
         }
-        .padding()
     }
 }
 
 #Preview {
-    ContentView()
+    ContentView() // Відображення попереднього перегляду
 }
