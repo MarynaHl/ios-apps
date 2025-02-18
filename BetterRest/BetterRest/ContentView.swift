@@ -1,13 +1,13 @@
-import SwiftUI // Імпортуємо SwiftUI для роботи з UI
+import SwiftUI // Імпортуємо SwiftUI
 
 struct ContentView: View {
-    @State private var sleepAmount = 8.0 // Початкове значення (години сну)
+    @State private var wakeUp = Date.now // Вибрана дата з початковим значенням
 
     var body: some View {
-        Form { // Форма для структурованого відображення елементів
-            Section(header: Text("Select your sleep amount")) { // Заголовок секції
-                Stepper("\(sleepAmount.formatted()) hours", value: $sleepAmount, in: 4...12, step: 0.25)
-                // Stepper: дозволяє вибрати значення між 4 і 12 годинами з кроком 0.25
+        Form {
+            Section(header: Text("Select your wake-up time")) { // Заголовок секції
+                DatePicker("Wake-up time", selection: $wakeUp, displayedComponents: .hourAndMinute)
+                    .labelsHidden() // Приховує мітку, але залишає її для VoiceOver
             }
         }
     }
