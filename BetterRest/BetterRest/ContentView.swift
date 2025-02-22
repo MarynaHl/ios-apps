@@ -1,29 +1,43 @@
 import SwiftUI // Імпортуємо SwiftUI
 
 struct ContentView: View {
-    @State private var wakeUp = defaultWakeTime // Використання значення за замовчуванням
+    // @State змінні для збереження вибору користувача
+    @State private var wakeUp = Date.now
+    @State private var sleepAmount = 8.0
+    @State private var coffeeAmount = 1
 
     var body: some View {
-        Form {
-            Section(header: Text("Select your wake-up time")) {
-                DatePicker("Wake-up time", selection: $wakeUp, displayedComponents: .hourAndMinute)
-                    .labelsHidden() // Приховуємо мітку для кращого UI
-            }
+        NavigationStack {
+            VStack(spacing: 20) { // Відстань між елементами
+                // Вибір часу пробудження
+                Text("When do you want to wake up?")
+                    .font(.headline)
 
-            Section(header: Text("Formatted Time Examples")) {
-                Text("Time: \(wakeUp.formatted(date: .omitted, time: .shortened))")
-                Text("Full Date: \(wakeUp.formatted(date: .long, time: .shortened))")
-                Text("Custom Format: \(wakeUp, format: .dateTime.day().month().year())")
+                DatePicker("Please enter a time", selection: $wakeUp, displayedComponents: .hourAndMinute)
+                    .labelsHidden() // Приховує мітку
+
+                // Вибір бажаної кількості годин сну
+                Text("Desired amount of sleep")
+                    .font(.headline)
+
+                Stepper("\(sleepAmount.formatted()) hours", value: $sleepAmount, in: 4...12, step: 0.25)
+
+                // Вибір кількості чашок кави
+                Text("Daily coffee intake")
+                    .font(.headline)
+
+                Stepper("\(coffeeAmount) cup(s)", value: $coffeeAmount, in: 1...20)
+            }
+            .navigationTitle("BetterRest") // Заголовок навігації
+            .toolbar {
+                Button("Calculate", action: calculateBedtime) // Кнопка у верхньому меню
             }
         }
     }
 
-    // Обчислення 8:00 ранку як значення за замовчуванням
-    static var defaultWakeTime: Date {
-        var components = DateComponents()
-        components.hour = 8
-        components.minute = 0
-        return Calendar.current.date(from: components) ?? Date.now
+    // Метод для обчислення часу засинання
+    func calculateBedtime() {
+        // Логіка буде додана пізніше
     }
 }
 
