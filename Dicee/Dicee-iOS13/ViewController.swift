@@ -10,10 +10,17 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var diceImageViewOne: UIImageView!
+    @IBOutlet weak var diceImageView1: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        diceImageViewOne.image = UIImage(imageLiteralResourceName: <#T##String#>)
+        diceImageView1.image = UIImage(named: "DiceSix")
+        if let image = UIImage(named: "DiceSix") {
+            print("✅ Image found!")
+        } else {
+            print("❌ Image NOT found!")
+        }
+
+
     }
 
 
